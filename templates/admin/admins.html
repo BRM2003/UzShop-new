@@ -1,0 +1,45 @@
+{% extends 'admin/header.html' %} {% load static %} {% block page_styles %}
+<link rel="stylesheet" href="{% static 'styles/admin_panel/orders_style.css' %}"> {% endblock %} {% block page_content %}
+<section class="main">
+
+    <div class="container">
+
+
+        <div style="margin-top:10px;margin-bottom:20px" class="table-responsive">
+            <table class="table">
+                <thead class="text-center">
+                    <tr>
+                        <th scope="col">Admin</th>
+                        <th scope="col">Yangi</th>
+                        <th scope="col">Qabul qilindi</th>
+                        <th scope="col">Yetkazilmoqda</th>
+                        <th scope="col">Keyin Oladi </th>
+                        <th scope="col">Qayta Qo'ng'iroq </th>
+                        <th scope="col">Arxiv </th>
+                        <th scope="col">Yetqazib berildi</th>
+                        <th scope="col">Balans</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for admin_id, admin_data in table.items %}
+                    <tr>
+                        <th> {{admin_data.admin_name}} </th>
+                        <td> {{admin_data.orders_len_1}} </td>
+                        <td> {{admin_data.orders_len_2}} </td>
+                        <td> {{admin_data.orders_len_3}} </td>
+                        <td> {{admin_data.orders_len_6}} </td>
+                        <td> {{admin_data.orders_len_7}} </td>
+                        <td> {{admin_data.orders_len_8}} </td>
+                        <td> {{admin_data.orders_len_4}} </td>
+                        <td> {{admin_data.total_amount}} so'm</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+</section>
+{% endblock %}

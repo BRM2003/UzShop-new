@@ -1,0 +1,95 @@
+{% extends 'admin/header.html' %} {% load static %} {% block page_styles %}
+<link rel="stylesheet" href="{% static 'styles/admin_panel/control_style.css' %}"> {% endblock %} {% block page_content %}
+<section class="main">
+    <div class="d-flex justify-content-center align-items-center " style="margin-top:50px">
+        <div class="card-container " style="padding:10px">
+            <span class="pro">{{admin.job_title}}</span> {% if admin.photo != '' %}
+            <img class="round" width="100" src="/media/{{admin.photo}}" alt="user"> {% else %}
+            <img class="round" width="100" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" alt="user"> {% endif %}
+            <h3><i style="color:gold" class="fa-solid fa-crown"></i></h3>
+            <p>Telefon raqam: {{admin.phone_number}}</p>
+            <div class="buttons">
+                <a href="/users/logout"><button class="btn btn-danger">
+                    Akkauntdan chiqish
+                </button></a>
+                <hr style="border-color:#fff">
+
+            </div>
+
+        </div>
+    </div>
+    <div class="container" style="margin-top:50px">
+        <div class="card-balance">
+            <div class="">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card l-bg-cherry">
+                            <div class="card-statistic-3 p-4">
+                                <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div>
+                                <div class="mb-4">
+                                    <h5 class="card-title mb-0">So'rovlar</h5>
+                                </div>
+                                <ul class="srvs" style="list-style:none">
+                                    <li><a href="/users/control/reqs?filter=1">Yangi</a></li>
+                                    <li><a href="/users/control/reqs?filter=3">Yetkazilmoqda</a></li>
+                                    <li><a href="/users/control/reqs?filter=8">Sotilganlar</a></li>
+                                    <li><a href="/users/control/reqs?filter=7">Arxiv</a></li>
+                                </ul>
+                                <div class="row align-items-center mb-2 d-flex">
+                                    <div class="col-8">
+                                        <h5>Jami so'rovlar:</h5>
+                                        <h2 class="d-flex align-items-center mb-0">{{count_of_orders}}</h2>
+                                    </div>
+                                    <div class="col-4 text-right"> <span> <i class="fa fa-arrow-up"></i></span></div>
+                                </div>
+                                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                                    <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-balance_main">
+                <div class="row"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <h4 class="display-4" style="text-align:center;margin-top:50px">Mahsulot Qo'shish</h4>
+
+    <form enctype="multipart/form-data" action="" method="post" style="margin-top:50px">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            {{ form.title }}
+        </div>
+        <div class="input-group mb-3">
+            {{ form.category }}
+        </div>
+        <div class="input-group mb-3">
+            {{ form.description }}
+        </div>
+        <div class="input-group mb-3">
+            {{ form.amount }}
+        </div>
+        <div class="input-group mb-3">
+            {{ form.price_for_admin }}
+        </div>
+        <div class="input-group mb-3" id="file_upload_div">
+            {{ form.photo }}
+        </div>
+
+
+
+        <div class="input-group mb-3">
+            <button type="submit" class="btn btn-success">Qo'shish</button>
+        </div>
+
+    </form>
+</div>
+{% endblock %} {% block page_scripts %}
+<script>
+    console.log("{{ form }}")
+</script>
+{% endblock %}

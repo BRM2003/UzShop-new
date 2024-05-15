@@ -1,0 +1,81 @@
+{% extends 'shop/header.html' %} {% load static %} {% block title %}O'zbekiston bo'ylab bepul yetqazib berish{% endblock %} {% block page_styles %}
+<link rel="stylesheet" href="{% static 'styles/main_shop_page/product_page_style.css' %}">
+<style>
+    input[type="text"] {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    input[type="text"]:focus {
+        outline: none;
+        border: 1px solid #007bff;
+    }
+    
+    input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %} {% block page_content %}
+
+<section class="page_content">
+    <div class="product_info">
+        <img src="/media/{{product.photo}}" alt="" srcset="" class="product_img">
+        <div class="product_text_info">
+            <h2 class="pr_title">{{product.title}}</h2>
+            <h4 class="pr_cotegory">{{product.category}}</h4>
+            <p class="product_desc">{{product.description}}</p>
+            <p class="product_amount"><b>Mahsulot narxi:</b> {{product.amount}} {{product.currency}}</p>
+            <form enctype="multipart/form-data" action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{product.id}}">
+                <input type="text" id="phone" name="phone_number" placeholder="+998 (__) ___-__-__" required>
+                <input type="text" name="user_name" placeholder="Ismingiz" required>
+                <input type="submit" class="btn btn-success" value="Buyurtma berish">
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %} {% block page_scripts %} {% if authenticated == False %}
+<script>
+    const buy_btn = document.querySelector('button[type="submit"]');
+    buy_btn.addEventListener('click', () => {
+        window.open('/users/login_user/?page_return=/shop/product?num={{product.id}}', '_self')
+    })
+</script>
+
+<!-- <script>
+    const phoneInput = document.getElementById('phone');
+
+    phoneInput.addEventListener('input', (event) => {
+        const input = event.target;
+        const value = input.value.replace(/\D/g, '');
+
+        if (value.length <= 10) {
+            input.value = formatPhoneNumber(value);
+        }
+    });
+
+    function formatPhoneNumber(value) {
+        if (value.length < 3) {
+            return `+998 (${value}`;
+        } else if (value.length < 6) {
+            return `+998 (${value.slice(0, 2)}) ${value.slice(2)}`;
+        } else if (value.length < 9) {
+            return `+998 (${value.slice(0, 2)}) ${value.slice(2, 5)}-${value.slice(5)}`;
+        } else {
+            return `+998 (${value.slice(0, 2)}) ${value.slice(2, 5)}-${value.slice(5, 7)}-${value.slice(7)}`;
+        }
+    }
+</script> -->
+{% endif %} {% endblock %}

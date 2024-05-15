@@ -1,0 +1,85 @@
+{% extends 'shop/header.html' %} {% load static %} {% block title %}O'zbekiston bo'ylab bepul yetqazib berish{% endblock %} {% block page_styles %}
+<link rel="stylesheet" href="{% static 'styles/main_shop_page/main_content_style.css' %}"> {% endblock %} {% block page_content %}
+<section id="filter_section">
+    <div class="search_block">
+        <h1 class="content_title">Karol.uz - bu eng innavatsion goyalarni o'z ichiga olgan internet do'kon</h1>
+        <div class="search_input_block">
+            <input type="search" placeholder="Qidirish">
+            <button type="submit" class="search_btn"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+    <div class="filter_category">
+        {% for category in categories %}
+        <p class="category">{{category}}</p>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <div class="amount_filter">
+
+    </div>
+
+    <button type="submit" class="category_btn">Qidirish</button>
+</section>
+<section id="shop_section">
+    {% if order == 'success' %}
+    <div class="alert alert-success" style="text-align:center">Buyurtmangiz qabul qilindi! Tez orada operatorlar siz bilan bog'lanadi!</div>
+    {% endif %}
+    <h1 class="shop_title">Yangi Mahsulotlar</h1>
+    <div class="product_list">
+
+        {% for el in goods %}
+        <div class="product">
+            <img src="media/{{el.photo}}" alt="" srcset="" class="product_img">
+            <div class="product_info">
+                <h1 class="product_title">{{el.title}}</h1>
+                <h3 class="product_category">{{el.category}}</h3>
+                <p class="product_desc">{{el.description}}</p>
+                <div class="product_bottom_block">
+                    <h2>{{el.amount}}</h2>
+                    <button type="button" class="buy_product" data-product-id="{{el.id}}"><i class="fas fa-shopping-cart"></i> Buyurtma berish</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %} {% block page_scripts %}
+<script>
+    let categories = document.querySelectorAll('.category'),
+        filter_btn = document.querySelector('.category_btn'),
+        buy_btns = document.querySelectorAll('.buy_product');
+    for (let i = 0; i < categories.length; i++) {
+        categories[i].addEventListener('click', () => {
+            categories[i].classList.toggle('selected')
+        })
+    }
+
+    filter_btn.addEventListener('click', () => {
+        const all_categories = document.querySelectorAll('.category'),
+            search_input = document.querySelector('input[type="search"]');
+        let len_of_celected_categories = 0,
+            url = '/shop?category='
+        for (let i = 0; i < all_categories.length; i++) {
+            if (all_categories[i].classList.contains('selected')) {
+                len_of_celected_categories++;
+                url += all_categories[i].textContent + '^'
+                console.log(all_categories[i].textContent)
+            }
+        }
+        if (url[url.length - 1] == '^')
+            url = url.slice(0, -1)
+        if (search_input.value != '')
+            url += '&search=' + search_input.value;
+        console.log(url)
+        window.location.replace(url)
+    })
+
+    for (let i = 0; i < buy_btns.length; i++) {
+        buy_btns[i].addEventListener('click', () => {
+            window.open('shop/product?num=' + buy_btns[i].getAttribute('data-product-id'), "_self")
+        })
+    }
+</script>
+{% endblock %}
