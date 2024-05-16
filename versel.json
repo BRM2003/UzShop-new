@@ -1,28 +1,26 @@
 {
-  "version": 2,
   "builds": [
-    {
-      "src": "UzShop/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb" }
-    },
     {
       "src": "build_files.sh",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "static/"
+        "distDir": "staticfiles_build"
       }
+    },
+    {
+      "src": "/UzShop/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb" }
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
       "src": "/(.*)",
       "dest": "UzShop/wsgi.py"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
     }
-  ],
-  "outputDirectory": "static/"
+  ]
 }
