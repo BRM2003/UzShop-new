@@ -4,7 +4,7 @@
     {
       "src": "UzShop/wsgi.py",
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+      "config": { "maxLambdaSize": "15mb" }
     },
     {
       "src": "build_files.sh",
@@ -21,8 +21,8 @@
     },
     {
       "src": "/(.*)",
-      "dest": "<projectname>/wsgi.py"
+      "dest": "UzShop/wsgi.py"
     }
   ],
-  "outputDirectory": "ui/staticfiles"
+  "outputDirectory": "static/"
 }
