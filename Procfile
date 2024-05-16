@@ -1,0 +1,1 @@
+web: gunicorn UzShop.wsgi --log-file -
